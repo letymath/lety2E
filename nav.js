@@ -1,47 +1,137 @@
-// ================================================
-//   lety2E — nav.js
-//   Navegación compartida — se inyecta en todas las páginas
-//   Uso: <script src="/nav.js"></script>  (o la ruta relativa correcta)
-//   Se inserta automáticamente antes del primer elemento del body
-// ================================================
+/* ================================================
+   lety2E — nav.js (unificado)
+   Detecta sección y nivel automáticamente.
+   Para agregar una nueva sección, solo agrega
+   una entrada en SECTIONS.
+   ================================================ */
+(function () {
+  'use strict';
 
-(function() {
-  const nav = `
-  <header class="site-nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-brand">
-        <div class="nav-badge"><span>2E</span></div>
-        <span class="nav-name">lety2E</span>
-      </a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="https://letymath.com" target="_blank">LetyMath</a></li>
-          <li><a href="/cantos/">Cantos</a></li>
-          <li><a href="/escritos/">Escritos</a></li>
-          <li><a href="/apuntes/">Apuntes</a></li>
-          <li><a href="/la-turquesa/">La Turquesa</a></li>
-        </ul>
-      </nav>
-      <button class="nav-ham" aria-label="menú" onclick="this.closest('.site-nav').querySelector('.nav-links').classList.toggle('open')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
-      </button>
-    </div>
-  </header>`;
-
-  // Insertar al inicio del body
-  document.body.insertAdjacentHTML('afterbegin', nav);
-
-  // Marcar link activo según URL actual
-  const links = document.querySelectorAll('.nav-links a');
-  links.forEach(link => {
-    if (link.href !== 'https://letymath.com' &&
-        window.location.pathname.startsWith(new URL(link.href).pathname) &&
-        new URL(link.href).pathname !== '/') {
-      link.classList.add('active');
+  /* ── Configuración de secciones ─────────────── */
+  const SECTIONS = {
+    escritos: {
+      name: 'Escritos',
+      links: [
+        { text: 'Historias', href: 'historias/index.html' },
+        { text: 'Poemas', href: 'poemas/index.html' },
+        { text: 'Reflexiones', href: 'reflexiones/index.html' },
+        { text: 'Varios', href: 'varios/index.html' }
+      ]
+    },
+    apuntes: {
+      name: 'Apuntes',
+      links: [
+        { text: 'Historia', href: 'historia-mexico/index.html' },
+        { text: 'Física', href: 'fisica/index.html' },
+        { text: 'IA', href: 'ia/index.html' },
+        { text: 'Cosmética', href: 'cosmetica-natural/index.html' },
+        { text: 'Eneagrama', href: 'eneagrama/index.html' },
+        { text: 'Bolsa', href: 'bolsa-valores/index.html' }
+      ]
+    },
+    letymath: {
+      name: 'LetyMath',
+      links: [
+        { text: 'Mat 1', href: 'matematicas-1/index.html' },
+        { text: 'Mat 2', href: 'matematicas-2/index.html' },
+        { text: 'Mat 3', href: 'matematicas-3/index.html' },
+        { text: 'Mat 4', href: 'matematicas-4/index.html' },
+        { text: 'Mat 5', href: 'matematicas-5/index.html' }
+      ]
     }
-  });
+  };
+
+  const ROOT_LINKS = [
+    { text: 'Escritos', href: 'escritos/index.html' },
+    { text: 'Apuntes', href: 'apuntes/index.html' },
+    { text: 'LetyMath', href: 'letymath/index.html' },
+    { text: 'Cantos', href: 'https://www.youtube.com/@Lety-lupian/videos', external: true }
+  ];
+
+  /* ── Detectar profundidad (cuántos ../ hay en src) */
+  var scriptSrc = document.currentScript.getAttribute('src');
+  var depth = (scriptSrc.match(/\.\.\//g) || []).length;
+  // depth 0 = raíz, 1 = sección, 2 = subsección
+
+  /* ── Detectar sección actual ─────────────────── */
+  var path = window.location.pathname.toLowerCase();
+  var section = null;
+  var keys = Object.keys(SECTIONS);
+  for (var i = 0; i < keys.length; i++) {
+    if (path.indexOf('/' + keys[i] + '/') !== -1) {
+      section = keys[i];
+      break;
+    }
+  }
+
+  /* ── Calcular rutas base ─────────────────────── */
+  var root = depth === 0 ? './' : new Array(depth + 1).join('../');
+  var iconPath = root + 'assets/logos/icono-2e-magenta.png';
+  var homePath = root + 'index.html';
+
+  /* ── Determinar contenido del nav ────────────── */
+  var brandName, sectionHref, links;
+
+  if (depth === 0) {
+    // Raíz: icono y nombre van al mismo lugar
+    brandName = 'lety2E';
+    sectionHref = null;  // no hay sección, todo va a home
+    links = ROOT_LINKS;
+  } else if (depth === 1 && section && SECTIONS[section]) {
+    // Sección: icono → home, nombre → aquí mismo (index de sección)
+    brandName = SECTIONS[section].name;
+    sectionHref = './index.html';
+    links = SECTIONS[section].links;
+  } else if (depth >= 2 && section && SECTIONS[section]) {
+    // Subsección: icono → home, nombre → index de sección
+    brandName = SECTIONS[section].name;
+    sectionHref = '../index.html';
+    links = [{ text: '\u2190 Volver', href: '../index.html' }];
+  } else {
+    brandName = 'lety2E';
+    sectionHref = null;
+    links = ROOT_LINKS;
+  }
+
+  /* ── Generar HTML de links ───────────────────── */
+  var linksHTML = '';
+  for (var j = 0; j < links.length; j++) {
+    var l = links[j];
+    var attrs = l.external ? ' target="_blank" rel="noopener"' : '';
+    linksHTML += '<li><a href="' + l.href + '"' + attrs + '>' + l.text + '</a></li>';
+  }
+
+  /* ── Inyectar ────────────────────────────────── */
+  var brandHTML;
+  if (sectionHref) {
+    // Sección/subsección: icono → home, nombre → índice de sección
+    brandHTML =
+      '<div class="nav-brand">' +
+        '<a href="' + homePath + '" class="nav-icon-link" aria-label="Ir a lety2E inicio">' +
+          '<div class="nav-badge" style="background-image:url(\'' + iconPath + '\')"></div>' +
+        '</a>' +
+        '<a href="' + sectionHref + '" class="nav-name-link">' +
+          '<span class="nav-name">' + brandName + '</span>' +
+        '</a>' +
+      '</div>';
+  } else {
+    // Raíz: todo va a home
+    brandHTML =
+      '<a href="' + homePath + '" class="nav-brand">' +
+        '<div class="nav-badge" style="background-image:url(\'' + iconPath + '\')"></div>' +
+        '<span class="nav-name">' + brandName + '</span>' +
+      '</a>';
+  }
+
+  var nav =
+    '<header class="site-nav">' +
+      '<div class="nav-inner">' +
+        brandHTML +
+        '<nav>' +
+          '<ul class="nav-links">' + linksHTML + '</ul>' +
+        '</nav>' +
+      '</div>' +
+    '</header>';
+
+  document.body.insertAdjacentHTML('afterbegin', nav);
 })();

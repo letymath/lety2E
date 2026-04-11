@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jerarquía de Operaciones — Matemáticas 1 — LetyMath</title>
+  <meta name="description" content="Apuntes y ejercicios de jerarquía de operaciones para Matemáticas 1." />
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left:'$$', right:'$$', display:true},
+        {left:'\\(', right:'\\)', display:false}
+      ]
+    });"></script>
+
+  <style>
+    .topic-tag {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .22rem .75rem; border-radius: 99px;
+      background: var(--accent-light); color: var(--accent);
+      font-size: .78rem; font-weight: 700; letter-spacing: .03em;
+      margin-bottom: .55rem;
+    }
+    .topic-tag::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); display: inline-block;
+    }
+
+    .sec-head { display: flex; align-items: center; gap: .65rem; margin-bottom: 1.1rem; }
+    .sec-head h2 { margin: 0; font-size: 1.2rem; line-height: 1; }
+    .sec-icon {
+      width: 30px; height: 30px; border-radius: 8px;
+      display: grid; place-items: center; flex-shrink: 0;
+      background: var(--accent);
+    }
+    .sec-icon svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .sec-icon.naranja { background: var(--math-move); }
+    .sec-icon.verde   { background: var(--math-result); }
+    .sec-icon.morado  { background: var(--math-var); }
+
+    /* Video único */
+    .video-single { max-width: 620px; }
+    .video-label {
+      font-family: var(--font-mono); font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin-bottom: .4rem;
+    }
+    .video-wrapper {
+      position: relative; padding-bottom: 56.25%; height: 0;
+      overflow: hidden; border-radius: var(--radius-md); background: #000;
+    }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+    /* Ejemplos con sub-pasos */
+    .ejemplo-lista { list-style: none; display: flex; flex-direction: column; gap: 1.75rem; }
+    .ejemplo-lista li { display: flex; flex-direction: column; gap: .3rem; }
+    .ej-linea {
+      display: flex; flex-wrap: wrap; align-items: baseline;
+      gap: .1rem; font-size: 1rem; line-height: 1.7;
+    }
+    .paso-int {
+      background: rgba(234,125,36,.13); color: var(--math-move);
+      border-radius: 4px; padding: 0 .22rem;
+    }
+    .paso-fin {
+      background: rgba(220,38,38,.10); color: var(--math-answer);
+      font-weight: 700; border-radius: 4px; padding: 0 .25rem;
+    }
+    .ej-pasos-col {
+      display: flex; flex-direction: column; gap: .2rem;
+      padding-left: 1.2rem;
+      border-left: 2px solid var(--border);
+      margin-top: .2rem;
+    }
+    .ej-paso {
+      display: flex; flex-wrap: wrap; align-items: baseline;
+      gap: .1rem; font-size: .95rem; line-height: 1.6; color: var(--text-secondary);
+    }
+
+    /* Bloques ejercicios */
+    .bloques-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    }
+    @media (max-width: 560px) { .bloques-grid { grid-template-columns: 1fr; } }
+
+    .bloque-card {
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--radius-md); overflow: hidden;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .bloque-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--course-1); }
+    .bloque-head {
+      padding: .5rem .9rem; background: var(--course-1);
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .bloque-badge {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(255,255,255,.25); color: #fff;
+      font-family: var(--font-mono); font-size: .68rem; font-weight: 700;
+      display: grid; place-items: center;
+    }
+    .bloque-head span { font-family: var(--font-display); font-size: .9rem; color: #fff; }
+    .bloque-ejercicios { list-style: none; padding: .65rem .9rem; display: flex; flex-direction: column; }
+    .bloque-ejercicios li { font-size: .92rem; padding: .4rem 0; border-bottom: 1px solid var(--bg-card-hover); }
+    .bloque-ejercicios li:last-child { border-bottom: none; }
+
+    /* Botón respuestas */
+    .btn-ver-resp {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .6rem 1.3rem; border-radius: 99px;
+      font-size: .88rem; font-weight: 700; font-family: var(--font-body);
+      cursor: pointer; border: 2px solid var(--math-result);
+      background: transparent; color: var(--math-result);
+      transition: background .2s, color .2s; margin-bottom: .9rem;
+    }
+    .btn-ver-resp:hover, .btn-ver-resp.open { background: var(--math-result); color: #fff; }
+    .btn-ver-resp .chev { transition: transform .25s; font-size: .7rem; }
+    .btn-ver-resp.open .chev { transform: rotate(180deg); }
+
+    /* Tarjetas respuesta */
+    .resp-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+    @media (max-width: 560px) { .resp-grid { grid-template-columns: 1fr; } }
+
+    .resp-card {
+      background: #FFF7F7; border: 1px solid #FECACA;
+      border-radius: var(--radius-sm); padding: .85rem;
+    }
+    .resp-card-head {
+      display: flex; align-items: center; gap: .5rem;
+      margin-bottom: .6rem; padding-bottom: .45rem;
+      border-bottom: 1px solid #FECACA;
+    }
+    .resp-badge {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--math-answer); color: #fff;
+      font-family: var(--font-mono); font-size: .68rem; font-weight: 700;
+      display: grid; place-items: center;
+    }
+    .resp-card-head span { font-family: var(--font-display); font-size: .88rem; color: var(--math-answer); }
+
+    .resp-lista { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .resp-item { display: flex; flex-direction: column; gap: .2rem; }
+    .resp-enunciado { font-size: .82rem; color: var(--text); font-weight: 600; }
+    .resp-pasos {
+      display: flex; flex-direction: column; gap: .16rem;
+      padding-left: .85rem; border-left: 2px solid #FECACA;
+    }
+    .resp-paso {
+      display: flex; flex-wrap: wrap; align-items: baseline;
+      gap: .1rem; font-size: .78rem; color: var(--text-secondary);
+    }
+    .resp-paso .katex { font-size: .88em; }
+
+    /* Hojas adicionales */
+    .hoja { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+    @media (max-width: 560px) { .hoja { grid-template-columns: 1fr; } }
+
+    .hoja-col { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .hoja-ej {
+      font-size: .9rem; padding: .36rem .75rem;
+      border-bottom: 1px solid var(--bg-card-hover); transition: background .15s;
+    }
+    .hoja-ej:last-child { border-bottom: none; }
+    .hoja-ej:hover { background: var(--bg-card-hover); }
+
+    /* Navegación */
+    .topic-nav-btns {
+      display: flex; justify-content: space-between;
+      margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    }
+    .btn-anterior, .btn-siguiente {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .65rem 1.4rem; border-radius: 99px;
+      font-weight: 700; font-size: .9rem; transition: background .2s, transform .18s;
+    }
+    .btn-anterior {
+      background: var(--bg-card); color: var(--text); border: 1.5px solid var(--border);
+    }
+    .btn-anterior:hover { background: var(--bg-card-hover); color: var(--text); transform: translateX(-3px); }
+    .btn-siguiente { background: var(--accent); color: #fff; }
+    .btn-siguiente:hover { background: var(--accent-dark); color: #fff; transform: translateX(3px); }
+  </style>
+</head>
+<body data-section="letymath">
+  <main class="topic-content">
+
+    <header class="topic-header">
+      <p class="breadcrumb">
+        <a href="../index.html">Inicio</a> ›
+        <a href="index.html">Matemáticas 1</a> ›
+        Jerarquía de Operaciones
+      </p>
+      <div class="topic-tag">Matemáticas 1 · Tema 2</div>
+      <h1>Jerarquía de Operaciones</h1>
+    </header>
+
+
+    <!-- ══════════ VIDEO ══════════ -->
+    <section class="section-block">
+      <div class="sec-head">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-width="0" fill="white"/></svg>
+        </div>
+        <h2>Video</h2>
+      </div>
+      <div class="video-single">
+        <p class="video-label">Jerarquía de operaciones</p>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/VeX9Enr2MIM?rel=0"
+            title="Jerarquía de operaciones" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <a href="https://youtu.be/VeX9Enr2MIM" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:.35rem;margin-top:.5rem;font-size:.78rem;font-weight:600;color:var(--accent);">
+          ▶ Abrir en YouTube
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ══════════ APUNTES ══════════ -->
+    <section class="section-block">
+      <div class="sec-head">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h2>Apuntes</h2>
+      </div>
+
+      <div class="apunte-box">
+        <ul class="ejemplo-lista">
+
+          <li>
+            <div class="ej-linea">\(-5+6(-3+8)-4(-3)(2)-5(-3)^2=\)</div>
+            <div class="ej-pasos-col">
+              <div class="ej-paso">\(-5\) \(+\)<span class="paso-int">\(6(5)\)</span> \(+\)<span class="paso-int">\(24\)</span> \(-\)<span class="paso-int">\(5(+9)\)</span>\(=\)</div>
+              <div class="ej-paso">\(-5+30+24-45=\)</div>
+              <div class="ej-paso"><span class="paso-int">\(-50+54\)</span>\(=\)<span class="paso-fin">\(4\)</span></div>
+            </div>
+          </li>
+
+          <li>
+            <div class="ej-linea">\(2\big[-5\big(-3(-2+8)\big)\big]=\)</div>
+            <div class="ej-pasos-col">
+              <div class="ej-paso">\(2\big[-5\big(\)<span class="paso-int">\(-3(6)\)</span>\(\big)\big]=\)</div>
+              <div class="ej-paso">\(2\big[\)<span class="paso-int">\(-5(-18)\)</span>\(\big]=\)</div>
+              <div class="ej-paso">\(2\big[\)<span class="paso-int">\(90\)</span>\(\big]=\)<span class="paso-fin">\(180\)</span></div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ══════════ EJERCICIOS ══════════ -->
+    <section class="section-block">
+      <div class="sec-head">
+        <div class="sec-icon naranja">
+          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <h2>Ejercicios</h2>
+      </div>
+
+      <div class="bloques-grid">
+
+        <div class="bloque-card">
+          <div class="bloque-head"><span class="bloque-badge">1</span><span>Bloque 1</span></div>
+          <ul class="bloque-ejercicios">
+            <li>\(4-2(-1)(-5)+6(-1+4)-3(-5)^2=\)</li>
+            <li>\(5(-2)(3)+4(-1-5)-3+4(-1)^2=\)</li>
+            <li>\(5\big[-3\big(4(-1-2)\big)\big]=\)</li>
+            <li>\(-3\big[2\big(-5(-4+10)\big)\big]=\)</li>
+          </ul>
+        </div>
+
+        <div class="bloque-card">
+          <div class="bloque-head"><span class="bloque-badge">2</span><span>Bloque 2</span></div>
+          <ul class="bloque-ejercicios">
+            <li>\(8-6(3-4)-2(3)^2+2(6)(-1)=\)</li>
+            <li>\(3(-2)^4+6-3(-4)(-1)+7(-3+10)=\)</li>
+            <li>\(4\big[-3\big(2(-10+4)\big)\big]=\)</li>
+            <li>\(-6\big[5\big(-4(3+7)\big)\big]=\)</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════ RESPUESTAS ══════════ -->
+    <section class="section-block">
+      <div class="sec-head">
+        <div class="sec-icon verde">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Respuestas</h2>
+      </div>
+
+      <button class="btn-ver-resp"
+        onclick="this.classList.toggle('open'); document.getElementById('resp').classList.toggle('show'); this.querySelector('.chev').textContent = this.classList.contains('open') ? '▲' : '▼';">
+        Ver respuestas <span class="chev">▼</span>
+      </button>
+
+      <div class="answer-content" id="resp">
+        <div class="resp-grid">
+
+          <div class="resp-card">
+            <div class="resp-card-head"><span class="resp-badge">1</span><span>Bloque 1</span></div>
+            <ul class="resp-lista">
+              <li class="resp-item">
+                <div class="resp-enunciado">\(4-2(-1)(-5)+6(-1+4)-3(-5)^2=\)</div>
+                <div class="resp-pasos">
+                  <div class="resp-paso">\(4\)<span class="paso-int">\(-10\)</span>\(+\)<span class="paso-int">\(6(3)\)</span><span class="paso-int">\(-3(25)\)</span>\(=\)</div>
+                  <div class="resp-paso">\(4-10+18-75=\)</div>
+                  <div class="resp-paso"><span class="paso-int">\(+22-85\)</span>\(=\)<span class="paso-fin">\(-63\)</span></div>
+                </div>
+              </li>
+              <li class="resp-item">
+                <div class="resp-enunciado">\(5(-2)(3)+4(-1-5)-3+4(-1)^2=\)</div>
+                <div class="resp-pasos">
+                  <div class="resp-paso"><span class="paso-int">\(-30\)</span>\(+\)<span class="paso-int">\(4(-6)\)</span>\(-3+\)<span class="paso-int">\(4(1)\)</span>\(=\)</div>
+                  <div class="resp-paso">\(-30-24-3+4=\)</div>
+                  <div class="resp-paso"><span class="paso-int">\(-57+4\)</span>\(=\)<span class="paso-fin">\(-53\)</span></div>
+                </div>
+              </li>
+              <li class="resp-item">
+                <div class="resp-enunciado">\(5\big[-3\big(4(-1-2)\big)\big]=\)</div>
+                <div class="resp-pasos">
+                  <div class="resp-paso">\(5\big[-3\big(\)<span class="paso-int">\(4(-3)\)</span>\(\big)\big]=\)</div>
+                  <div class="resp-paso">\(5\big[\)<span class="paso-int">\(-3(-12)\)</span>\(\big]=\)</div>
+                  <div class="resp-paso">\(5\big[\)<span class="paso-int">\(+36\)</span>\(\big]=\)<span class="paso-fin">\(180\)</span></div>
+                </div>
+              </li>
+              <li class="resp-item">
+                <div class="resp-enunciado">\(-3\big[2\big(-5(-4+10)\big)\big]=\)</div>
+                <div class="resp-pasos">
+                  <div class="resp-paso">\(-3\big[2\big(\)<span class="paso-int">\(-5(6)\)</span>\(\big)\big]=\)</div>
+                  <div class="resp-paso">\(-3\big[\)<span class="paso-int">\(2(-30)\)</span>\(\big]=\)</div>
+                  <div class="resp-paso">\(-3\big[\)<span class="paso-int">\(-60\)</span>\(\big]=\)<span class="paso-fin">\(180\)</span></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="resp-card">
+            <div class="resp-card-head"><span class="resp-badge">2</span><span>Bloque 2</span></div>
+            <ul class="resp-lista">
+              <li class="resp-item">
+                <div class="resp-enunciado">\(8-6(3-4)-2(3)^2+2(6)(-1)=\)</div>
+                <div class="resp-pasos">
+                  <div class="resp-paso">\(8\)<span class="paso-int">\(-6(-1)\)</span><span class="paso-int">\(-2(9)\)</span>\(-12=\)</div>
+                  <div class="resp-paso">\(8+6-18-12=\)</div>
+                  <div class="resp-paso"><span class="paso-int">\(+14-30\)</span>\(=\)<span class="paso-fin">\(-16\)</span></div>
+                </div>
+              </li>
+              <li class="resp-item">
+                <div class="resp-enunciado">\(3(-2)^4+6-3(-4)(-1)+7(-3+10)=\)</div>
+                <div class="resp-pasos">
+                  <div class="resp-paso"><span class="paso-int">\(3(16)\)</span>\(+6-12+\)<span class="paso-int">\(7(7)\)</span>\(=\)</div>
+                  <div class="resp-paso">\(48+6-12+49=\)</div>
+                  <div class="resp-paso"><span class="paso-int">\(+103-12\)</span>\(=\)<span class="paso-fin">\(91\)</span></div>
+                </div>
+              </li>
+              <li class="resp-item">
+                <div class="resp-enunciado">\(4\big[-3\big(2(-10+4)\big)\big]=\)</div>
+                <div class="resp-pasos">
+                  <div class="resp-paso">\(4\big[-3\big(\)<span class="paso-int">\(2(-6)\)</span>\(\big)\big]=\)</div>
+                  <div class="resp-paso">\(4\big[\)<span class="paso-int">\(-3(-12)\)</span>\(\big]=\)</div>
+                  <div class="resp-paso">\(4\big[\)<span class="paso-int">\(+36\)</span>\(\big]=\)<span class="paso-fin">\(144\)</span></div>
+                </div>
+              </li>
+              <li class="resp-item">
+                <div class="resp-enunciado">\(-6\big[5\big(-4(3+7)\big)\big]=\)</div>
+                <div class="resp-pasos">
+                  <div class="resp-paso">\(-6\big[5\big(\)<span class="paso-int">\(-4(10)\)</span>\(\big)\big]=\)</div>
+                  <div class="resp-paso">\(-6\big[\)<span class="paso-int">\(5(-40)\)</span>\(\big]=\)</div>
+                  <div class="resp-paso">\(-6\big[\)<span class="paso-int">\(200\)</span>\(\big]=\)<span class="paso-fin">\(-1200\)</span></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════ MÁS EJERCICIOS ══════════ -->
+    <section class="section-block">
+      <div class="sec-head">
+        <div class="sec-icon morado">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <h2>Más ejercicios</h2>
+      </div>
+
+      <div class="apunte-box">
+        <div class="hoja">
+          <div class="hoja-col">
+            <div class="hoja-ej">\(-4(-3)(-2)-3(-2+6)+5-4(-3)^2=\)</div>
+            <div class="hoja-ej">\(6(2)(-5)+7(8-4)-3+5(2)^3=\)</div>
+            <div class="hoja-ej">\(4-3(5)(-2)+6(-9+7)-7(-4)^2=\)</div>
+            <div class="hoja-ej">\(-5(4)(3)+6(2-9)-2+8(5)^3=\)</div>
+            <div class="hoja-ej">\(7+5(3)(-6)-4(8-5)+9(2)^2=\)</div>
+            <div class="hoja-ej">\(-4\big[-5\big(-3(-2+8)\big)\big]=\)</div>
+            <div class="hoja-ej">\(7\big[-3\big(4(5+1)\big)\big]=\)</div>
+            <div class="hoja-ej">\(-6\big[5\big(-2(3-7)\big)\big]=\)</div>
+            <div class="hoja-ej">\(8\big[-6\big(2(4+3)\big)\big]=\)</div>
+            <div class="hoja-ej">\(-5\big[3\big(-7(6-2)\big)\big]=\)</div>
+          </div>
+          <div class="hoja-col">
+            <div class="hoja-ej">\(-6(5)(-4)+7(2-6)-8+3(4)^2=\)</div>
+            <div class="hoja-ej">\(9(3)(-2)-5(7)^3+6(5-1)+2=\)</div>
+            <div class="hoja-ej">\(-4+6(-8)^2-3(2-7)+5(3)(-6)=\)</div>
+            <div class="hoja-ej">\(8-7(4)(-3)+9(6-2)-5(2)^3=\)</div>
+            <div class="hoja-ej">\(-3(2)(5)+6+4(-9+3)-7(3)^2=\)</div>
+            <div class="hoja-ej">\(-7\big[-4\big(6(-2+9)\big)\big]=\)</div>
+            <div class="hoja-ej">\(6\big[-5\big(3(7+4)\big)\big]=\)</div>
+            <div class="hoja-ej">\(-8\big[3\big(-6(5-2)\big)\big]=\)</div>
+            <div class="hoja-ej">\(5\big[-3\big(2(4+6)\big)\big]=\)</div>
+            <div class="hoja-ej">\(-4\big[6\big(-5(1+3)\big)\big]=\)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <div class="topic-nav-btns">
+      <a href="operaciones-basicas.html" class="btn-anterior">← Operaciones Básicas</a>
+      <a href="ecuaciones.html" class="btn-siguiente">Ecuaciones →</a>
+    </div>
+
+  </main>
+  <script src="../../nav.js"></script>
+  <script src="../../footer.js"></script>
+
+</body>
+</html>

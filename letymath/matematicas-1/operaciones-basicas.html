@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operaciones básicas — Matemáticas 1 — LetyMath</title>
+  <meta name="description" content="Apuntes y ejercicios de operaciones básicas con números enteros para Matemáticas 1." />
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left:'$$', right:'$$', display:true},
+        {left:'$', right:'$', display:false}
+      ]
+    });"></script>
+
+  <style>
+    .topic-tag {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .22rem .75rem; border-radius: 99px;
+      background: var(--accent-light); color: var(--accent);
+      font-size: .78rem; font-weight: 700; letter-spacing: .03em;
+      margin-bottom: .55rem;
+    }
+    .topic-tag::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); display: inline-block;
+    }
+
+    /* ── Section header con flecha desplegable ── */
+    .sec-head {
+      display: flex; align-items: center; gap: .65rem;
+      margin-bottom: 1.1rem;
+    }
+    .sec-head h2 { margin: 0; font-size: 1.2rem; line-height: 1; }
+    .sec-icon {
+      width: 30px; height: 30px; border-radius: 8px;
+      display: grid; place-items: center; flex-shrink: 0;
+      background: var(--accent);
+    }
+    .sec-icon svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Header clickeable para secciones colapsables */
+    .sec-toggle {
+      display: flex; align-items: center; gap: .65rem;
+      cursor: pointer; user-select: none;
+      padding: .6rem 0; margin: .5rem 0;
+    }
+    .sec-toggle h2 { margin: 0; font-size: 1.2rem; line-height: 1; }
+    .sec-toggle .chev {
+      margin-left: auto; font-size: .75rem; color: var(--text-muted);
+      transition: transform .25s;
+    }
+    .sec-toggle.open .chev { transform: rotate(180deg); }
+
+    /* Contenido colapsable */
+    .collapsible {
+      max-height: 0; overflow: hidden;
+      transition: max-height .4s ease, padding .3s ease;
+      padding: 0;
+    }
+    .collapsible.show {
+      max-height: 5000px;
+      padding: .8rem 0;
+    }
+
+    /* ── Videos lado a lado ── */
+    .videos-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 700px) { .videos-row { grid-template-columns: 1fr; } }
+    .video-label {
+      font-family: var(--font-mono); font-size: .68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin-bottom: .4rem;
+    }
+    .video-wrapper {
+      position: relative; padding-bottom: 56.25%; height: 0;
+      overflow: hidden; border-radius: var(--radius-md); background: #000;
+    }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+    /* ── Reglas ── */
+    .reglas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin: 1rem 0; }
+    @media (max-width: 480px) { .reglas-grid { grid-template-columns: 1fr; } }
+    .regla-card {
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); padding: .85rem;
+    }
+    .regla-card-title { font-weight: 700; font-size: .85rem; margin-bottom: .4rem; color: var(--course-1); }
+    .regla-card-body { font-size: .82rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* ── Ejemplo: centrado, protagonista ── */
+    .ejemplo-block {
+      text-align: center;
+      font-size: 1.05rem; line-height: 2.5;
+      margin: 1.5rem 0;
+      color: var(--text);
+    }
+
+    /* ── Tarjeta compacta (bloque) ── */
+    .mini-card {
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--radius-md); overflow: hidden;
+    }
+    .mini-card-head {
+      padding: .4rem .8rem; background: var(--course-1);
+      font-family: var(--font-display); font-size: .85rem; color: #fff; font-weight: 700;
+    }
+    .mini-card-body {
+      padding: .6rem .8rem;
+      font-size: .9rem; line-height: 1.9; color: var(--text);
+    }
+
+    /* ── Bloques en grid 3 columnas ── */
+    .bloques-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    @media (max-width: 700px) { .bloques-3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .bloques-3 { grid-template-columns: 1fr; } }
+
+    /* ── Nav ── */
+    .topic-nav-btns {
+      display: flex; justify-content: flex-end;
+      margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    }
+    .btn-siguiente {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .65rem 1.4rem; border-radius: 99px;
+      font-weight: 700; font-size: .9rem; transition: background .2s, transform .18s;
+      background: var(--accent); color: #fff;
+    }
+    .btn-siguiente:hover { background: var(--accent-dark); color: #fff; transform: translateX(3px); }
+  </style>
+</head>
+<body data-section="letymath">
+  <main class="topic-content">
+
+    <header class="topic-header">
+      <p class="breadcrumb">
+        <a href="../index.html">Inicio</a> ›
+        <a href="index.html">Matemáticas 1</a> ›
+        Operaciones básicas
+      </p>
+      <div class="topic-tag">Matemáticas 1 · Tema 1</div>
+      <h1>Operaciones básicas</h1>
+    </header>
+
+    <!-- ══════════ VIDEOS ══════════ -->
+    <section class="section-block">
+      <div class="sec-head">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-width="0" fill="white"/></svg>
+        </div>
+        <h2>Videos</h2>
+      </div>
+      <div class="videos-row">
+        <div>
+          <p class="video-label">Video 1 — Ejemplos</p>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/vtUB9jv5260?rel=0" title="Operaciones básicas — Ejemplos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div>
+          <p class="video-label">Video 2 — Reglas de signos</p>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/OLWwtSjUmqY?rel=0" title="Operaciones de números con signos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ APUNTES ══════════ -->
+    <section class="section-block">
+      <div class="sec-head">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h2>Apuntes</h2>
+      </div>
+      <div class="apunte-box">
+        <p style="margin-bottom:1.1rem; line-height:1.75;">
+          Las <strong>operaciones básicas</strong> con números enteros incluyen sumas, restas,
+          multiplicaciones, divisiones, raíces y potencias. La clave está en dominar las
+          <strong>reglas de signos</strong>.
+        </p>
+        <div class="reglas-grid">
+          <div class="regla-card">
+            <div class="regla-card-title">Sumas y restas</div>
+            <div class="regla-card-body">
+              $+$ ganancia &nbsp;/&nbsp; $-$ deuda<br>
+              Signos iguales <strong>se suman</strong><br>
+              Signos diferentes <strong>se restan</strong><br>
+              Predomina el signo del número más grande
+            </div>
+          </div>
+          <div class="regla-card">
+            <div class="regla-card-title">Multiplicaciones y divisiones</div>
+            <div class="regla-card-body">
+              Regla de signos:<br>
+              $(+)(+) = (+)$ &emsp; $(+)(-) = (-)$<br>
+              $(-)(+) = (-)$ &emsp; $(-)(-) = (+)$
+            </div>
+          </div>
+        </div>
+
+        <!-- Ejemplo: centrado, protagonista, sin tarjeta -->
+        <div class="ejemplo-block">
+          $-5+3-2+4-1 = 7-8 = $ <strong>$-1$</strong><br>
+          $2(-3)(4) = -6(4) = $ <strong>$-24$</strong><br>
+          $5(-3-8) = 5(-11) = $ <strong>$-55$</strong><br>
+          $\sqrt{36} = $ <strong>$\pm 6$</strong><br>
+          $(-2)^3 = (-2)(-2)(-2) = $ <strong>$-8$</strong><br>
+          $4(-5)^2 = 4(-5)(-5) = $ <strong>$100$</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ EJERCICIOS ══════════ -->
+    <section class="section-block">
+      <div class="sec-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('show');">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <h2>Ejercicios</h2>
+        <span class="chev">▼</span>
+      </div>
+      <div class="collapsible">
+        <div class="bloques-3">
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 1</div>
+            <div class="mini-card-body">
+              $-5+6-3+2-1=$<br>
+              $3(-2)(-5)=$<br>
+              $-2(-1-4)=$<br>
+              $\sqrt{36}=$<br>
+              $(-4)^3=$<br>
+              $5(-2)^2=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 2</div>
+            <div class="mini-card-body">
+              $8-6+2-1-2=$<br>
+              $-4(-1)(-5)=$<br>
+              $-4(8-3)=$<br>
+              $\sqrt{49}=$<br>
+              $(5)^3=$<br>
+              $2(-3)^3=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 3</div>
+            <div class="mini-card-body">
+              $-9+1+3-2-4=$<br>
+              $7(-2)(6)=$<br>
+              $-3(-1+9)=$<br>
+              $\sqrt{25}=$<br>
+              $(-6)^2=$<br>
+              $-4(1)^2=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 4</div>
+            <div class="mini-card-body">
+              $-7-5+3-2-9=$<br>
+              $9(1)(5)=$<br>
+              $5(4+8)=$<br>
+              $\sqrt{121}=$<br>
+              $(-4)^4=$<br>
+              $-6(5)^3=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 5</div>
+            <div class="mini-card-body">
+              $15+3-2+7-9=$<br>
+              $8(3)(-2)=$<br>
+              $-7(3-6)=$<br>
+              $\sqrt{-21}=$<br>
+              $(-2)^2=$<br>
+              $-3(6)^2=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 6</div>
+            <div class="mini-card-body">
+              $+3-5-2+7+6-8=$<br>
+              $-2(5)(-7)=$<br>
+              $-9(-1-6)=$<br>
+              $\sqrt[3]{27}=$<br>
+              $(-2)^5=$<br>
+              $4(-8)^2=$
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ RESPUESTAS ══════════ -->
+    <section class="section-block">
+      <div class="sec-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('show');">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Respuestas</h2>
+        <span class="chev">▼</span>
+      </div>
+      <div class="collapsible">
+        <div class="bloques-3">
+
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 1</div>
+            <div class="mini-card-body">
+              $-5+6-3+2-1 = 8-9 = $ <strong>$-1$</strong><br>
+              $3(-2)(-5) = -6(-5) = $ <strong>$30$</strong><br>
+              $-2(-1-4) = -2(-5) = $ <strong>$10$</strong><br>
+              $\sqrt{36} = $ <strong>$\pm 6$</strong><br>
+              $(-4)^3 = (-4)(-4)(-4) = $ <strong>$-64$</strong><br>
+              $5(-2)^2 = 5(-2)(-2) = $ <strong>$20$</strong>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 2</div>
+            <div class="mini-card-body">
+              $8-6+2-1-2 = 10-9 = $ <strong>$1$</strong><br>
+              $-4(-1)(-5) = 4(-5) = $ <strong>$-20$</strong><br>
+              $-4(8-3) = -4(5) = $ <strong>$-20$</strong><br>
+              $\sqrt{49} = $ <strong>$\pm 7$</strong><br>
+              $(5)^3 = (5)(5)(5) = $ <strong>$125$</strong><br>
+              $2(-3)^3 = 2(-3)(-3)(-3) = $ <strong>$-54$</strong>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 3</div>
+            <div class="mini-card-body">
+              $-9+1+3-2-4 = 4-15 = $ <strong>$-11$</strong><br>
+              $7(-2)(6) = -14(6) = $ <strong>$-84$</strong><br>
+              $-3(-1+9) = -3(8) = $ <strong>$-24$</strong><br>
+              $\sqrt{25} = $ <strong>$\pm 5$</strong><br>
+              $(-6)^2 = (-6)(-6) = $ <strong>$36$</strong><br>
+              $-4(1)^2 = -4(1)(1) = $ <strong>$-4$</strong>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 4</div>
+            <div class="mini-card-body">
+              $-7-5+3-2-9 = 3-23 = $ <strong>$-20$</strong><br>
+              $9(1)(5) = 9(5) = $ <strong>$45$</strong><br>
+              $5(4+8) = 5(12) = $ <strong>$60$</strong><br>
+              $\sqrt{121} = $ <strong>$\pm 11$</strong><br>
+              $(-4)^4 = (-4)(-4)(-4)(-4) = $ <strong>$256$</strong><br>
+              $-6(5)^3 = -6(5)(5)(5) = $ <strong>$-750$</strong>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 5</div>
+            <div class="mini-card-body">
+              $15+3-2+7-9 = 25-11 = $ <strong>$14$</strong><br>
+              $8(3)(-2) = 24(-2) = $ <strong>$-48$</strong><br>
+              $-7(3-6) = -7(-3) = $ <strong>$21$</strong><br>
+              $\sqrt{-21} = $ <strong>No existe en $\mathbb{R}$</strong><br>
+              $(-2)^2 = (-2)(-2) = $ <strong>$4$</strong><br>
+              $-3(6)^2 = -3(6)(6) = $ <strong>$-108$</strong>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 6</div>
+            <div class="mini-card-body">
+              $+3-5-2+7+6-8 = 16-15 = $ <strong>$1$</strong><br>
+              $-2(5)(-7) = -10(-7) = $ <strong>$70$</strong><br>
+              $-9(-1-6) = -9(-7) = $ <strong>$63$</strong><br>
+              $\sqrt[3]{27} = $ <strong>$3$</strong><br>
+              $(-2)^5 = (-2)(-2)(-2)(-2)(-2) = $ <strong>$-32$</strong><br>
+              $4(-8)^2 = 4(-8)(-8) = $ <strong>$256$</strong>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ EJERCICIOS EXTRA ══════════ -->
+    <section class="section-block">
+      <div class="sec-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('show');">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <h2>Ejercicios extra</h2>
+        <span class="chev">▼</span>
+      </div>
+      <div class="collapsible">
+        <div class="bloques-3">
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 7</div>
+            <div class="mini-card-body">
+              $-9+6-5+3-1=$<br>
+              $3(-5)(-2)=$<br>
+              $-1(-7-5)=$<br>
+              $\sqrt{49}=$<br>
+              $(-6)^3=$<br>
+              $7(-2)^2=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 8</div>
+            <div class="mini-card-body">
+              $-6+7-4+3-1=$<br>
+              $2(-3)(-6)=$<br>
+              $-4(-5-3)=$<br>
+              $\sqrt{81}=$<br>
+              $(-9)^3=$<br>
+              $8(-3)^2=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 9</div>
+            <div class="mini-card-body">
+              $-8+4-3+6-2=$<br>
+              $6(-4)(-3)=$<br>
+              $-2(-5-4)=$<br>
+              $\sqrt{25}=$<br>
+              $(-8)^3=$<br>
+              $5(-1)^2=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 10</div>
+            <div class="mini-card-body">
+              $-7+6-5+4-1=$<br>
+              $5(-3)(-2)=$<br>
+              $-3(-4-2)=$<br>
+              $\sqrt{36}=$<br>
+              $(-7)^3=$<br>
+              $6(-4)^2=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 11</div>
+            <div class="mini-card-body">
+              $-9+5-3+2-1=$<br>
+              $4(-2)(-5)=$<br>
+              $-1(-5-3)=$<br>
+              $\sqrt{64}=$<br>
+              $(-9)^3=$<br>
+              $7(-3)^2=$
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-head">Bloque 12</div>
+            <div class="mini-card-body">
+              $-8+6-4+2-1=$<br>
+              $2(-3)(-6)=$<br>
+              $-3(-4-2)=$<br>
+              $\sqrt{49}=$<br>
+              $(-8)^3=$<br>
+              $5(-2)^2=$
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ NAVEGACIÓN ══════════ -->
+    <div class="topic-nav-btns">
+      <a href="jerarquia.html" class="btn-siguiente">Jerarquía de operaciones →</a>
+    </div>
+
+  </main>
+  <script src="../../nav.js"></script>
+  <script src="../../footer.js"></script>
+</body>
+</html>
