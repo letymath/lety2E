@@ -44,8 +44,8 @@
   const ROOT_LINKS = [
     { text: 'Escritos', href: 'escritos/index.html' },
     { text: 'Apuntes', href: 'apuntes/index.html' },
-    { text: 'lety2E Math', href: 'math/index.html' },
-    { text: 'lety2E Lupian', href: 'https://www.youtube.com/@Lety-lupian/videos', external: true }
+    { text: 'Math', href: 'math/index.html' },
+    { text: 'Lupian', href: 'https://www.youtube.com/@Lety-lupian/videos', external: true }
   ];
 
   /* ── Detectar profundidad (cuántos ../ hay en src) */
