@@ -45,7 +45,7 @@
     { text: 'Escritos', href: 'escritos/index.html' },
     { text: 'Apuntes', href: 'apuntes/index.html' },
     { text: 'Math', href: 'math/index.html' },
-    { text: 'Lupian', href: 'https://www.youtube.com/@Lety-lupian/videos', external: true }
+    { text: 'Lupián', href: 'https://www.youtube.com/@Lety-lupian/videos', external: true }
   ];
 
   /* ── Detectar profundidad (cuántos ../ hay en src) */
