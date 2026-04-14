@@ -1,8 +1,8 @@
-# 📚 Plan de Migración LetyMath → HTML con LaTeX
+# 📚 Plan de Migración lety2E Math → HTML con LaTeX
 
 **Estado:** Estructuración inicial
 **Última actualización:** 2026-04-08
-**Objetivo:** Migrar letymath.com (Google Sites) a lety2e.com con estructura HTML/CSS/JS vanilla
+**Objetivo:** Migrar math.com (Google Sites) a lety2e.com con estructura HTML/CSS/JS vanilla
 
 ---
 
@@ -68,8 +68,8 @@
 ## 🗂️ Estructura de Archivos (Actual)
 
 ```
-letymath/
-├── index.html                    ← Portada de LetyMath (ok)
+math/
+├── index.html                    ← Portada de lety2E Math (ok)
 ├── assets/
 │   └── logos/                    ← Iconos 2E (ok)
 ├── matematicas-1/
@@ -110,7 +110,7 @@ letymath/
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[TÍTULO] — LetyMath</title>
+  <title>[TÍTULO] — lety2E Math</title>
   <meta name="description" content="[DESCRIPCIÓN]">
   <link rel="stylesheet" href="../../style.css">
   <!-- KaTeX para fórmulas LaTeX -->
@@ -118,7 +118,7 @@ letymath/
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 </head>
-<body data-section="letymath">
+<body data-section="math">
   <script src="../../nav.js"></script>
 
   <main class="topic-content">

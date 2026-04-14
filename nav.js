@@ -29,8 +29,8 @@
         { text: 'Bolsa', href: 'bolsa-valores/index.html' }
       ]
     },
-    letymath: {
-      name: 'LetyMath',
+    math: {
+      name: 'lety2E Math',
       links: [
         { text: 'Mat 1', href: 'matematicas-1/index.html' },
         { text: 'Mat 2', href: 'matematicas-2/index.html' },
@@ -44,8 +44,8 @@
   const ROOT_LINKS = [
     { text: 'Escritos', href: 'escritos/index.html' },
     { text: 'Apuntes', href: 'apuntes/index.html' },
-    { text: 'LetyMath', href: 'letymath/index.html' },
-    { text: 'Cantos', href: 'https://www.youtube.com/@Lety-lupian/videos', external: true }
+    { text: 'lety2E Math', href: 'math/index.html' },
+    { text: 'lety2E Lupian', href: 'https://www.youtube.com/@Lety-lupian/videos', external: true }
   ];
 
   /* ── Detectar profundidad (cuántos ../ hay en src) */

@@ -519,10 +519,10 @@ body[data-section="home"] main {
 }
 
 .nb-esc   { --btn-color: #A07020;  --btn-bg: #FFF5DC; }
-.nb-cant  { --btn-color: var(--M); --btn-bg: #FFE8F6; }
+.nb-lup   { --btn-color: var(--M); --btn-bg: #FFE8F6; }
 .nb-playa { --btn-color: #0080AA;  --btn-bg: #E0F4FF; border-color: #0080AA; }
 .nb-playa::before { background: #0080AA; }
-.nb-lm    { --btn-color: var(--P); --btn-bg: #F0E8FF; }
+.nb-math  { --btn-color: var(--P); --btn-bg: #F0E8FF; }
 .nb-apr   { --btn-color: #008878;  --btn-bg: #E0FAF6; border-color: var(--T); }
 .nb-apr::before { background: var(--T); }
 

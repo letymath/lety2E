@@ -52,7 +52,7 @@ lety2E/
 │   ├── cosmetica-natural/index.html
 │   ├── eneagrama/index.html
 │   └── bolsa-valores/index.html
-└── letymath/               ← Sección: LetyMath
+└── math/                  ← Sección: lety2E Math
     ├── index.html          ← Índice (5 cursos + optativa)
     ├── matematicas-1/      ← Cada curso tiene index.html + páginas de tema
     ├── matematicas-2/
@@ -75,7 +75,7 @@ lety2E/
 ### Nav inteligente (`nav.js`)
 - Detecta profundidad automáticamente contando `../` en su propia ruta src
 - Detecta sección actual por la URL del navegador
-- **Raíz (depth 0):** Muestra "lety2E" + links principales (Escritos, Apuntes, LetyMath, Cantos)
+- **Raíz (depth 0):** Muestra "lety2E" + links principales (Escritos, Apuntes, lety2E Math, lety2E Lupian)
 - **Sección (depth 1):** Muestra nombre de sección + links a subsecciones
 - **Subsección (depth 2+):** Muestra nombre de sección + "← Volver"
 
@@ -144,7 +144,7 @@ Todas las URLs son **relativas** para compatibilidad con `file://`:
 - **Tecnología:** HTML puro + CSS + JS vanilla (sin frameworks)
 - **Fuentes:** Google Fonts (Playfair Display + DM Sans)
 - **KaTeX:** Usado en páginas de LetyMath para fórmulas matemáticas
-- **Cantos:** Link externo a YouTube (@Lety-lupian)
+- **lety2E Lupian:** Link externo a YouTube (@Lety-lupian)
 
 ---
 

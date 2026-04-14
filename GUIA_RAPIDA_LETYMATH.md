@@ -1,4 +1,4 @@
-# 🚀 Guía Rápida: Generando HTML LetyMath
+# 🚀 Guía Rápida: Generando HTML lety2E Math
 
 **Estado:** Listos para empezar ✅
 **Fecha:** 2026-04-08
@@ -29,7 +29,7 @@
 ## 🎯 Próximos Pasos (Orden Recomendado)
 
 ### **PASO 1: Revisar el Mapeo JPG → Tópicos** (15 min)
-1. Abre: `letymath/mapeo_imagenes_completo.csv`
+1. Abre: `math/mapeo_imagenes_completo.csv`
 2. Verifica si el mapeo de páginas a tópicos es correcto
 3. Particularmente revisa:
    - Páginas 61-80 (Matemáticas 2) → Necesita detalles
@@ -37,11 +37,11 @@
 4. **Edita el script `mapeo_imagenes.py`** si el mapeo es incorrecto
 
 ### **PASO 2: Copiar y Personalizar el Template** (5 min)
-1. Abre: `letymath/TEMPLATE-TOPICO.html`
+1. Abre: `math/TEMPLATE-TOPICO.html`
 2. Guarda una copia con el nombre del tópico:
    ```
-   letymath/matematicas-1/operaciones-basicas.html
-   letymath/matematicas-2/operaciones-con-fracciones.html
+   math/matematicas-1/operaciones-basicas.html
+   math/matematicas-2/operaciones-con-fracciones.html
    etc.
    ```
 3. Reemplaza los `[BRACKETS]`:
@@ -64,7 +64,7 @@ Para cada tópico:
    - Botón "Volver al Índice" → `matematicas-N/index.html`
    - Botón "Tema Siguiente" → página correcta
 2. Prueba desde ambas profundidades:
-   - `letymath/matematicas-1/operaciones-basicas.html`
+   - `math/matematicas-1/operaciones-basicas.html`
    - La estructura relativa es: `../../nav.js`
 
 ---
@@ -159,7 +159,7 @@ Para cada tópico:
 ## 🔗 Estructura de Carpetas Actual
 
 ```
-letymath/
+math/
 ├── index.html                              ← Portada (ok)
 ├── TEMPLATE-TOPICO.html                   ← Copia esto para cada tema
 ├── mapeo_imagenes.py                       ← Script auxiliar
@@ -192,7 +192,7 @@ R: En la URL: `https://www.youtube.com/watch?v=**ESTE_ES_EL_ID**`
 
 **P: ¿La navegación nav/footer funcionará correctamente?**
 R: Sí, siempre y cuando mantengas la estructura:
-- `letymath/matematicas-1/tema.html` → usa `src="../../nav.js"` (2 `../`)
+- `math/matematicas-1/tema.html` → usa `src="../../nav.js"` (2 `../`)
 
 **P: ¿Necesito crear una skill?**
 R: No es necesario. El enfoque híbrido (template + copiar-pegar) es suficiente.
