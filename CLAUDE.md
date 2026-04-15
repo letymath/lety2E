@@ -266,6 +266,67 @@ KaTeX renderizará automáticamente.
 
 ---
 
+## 🎁 Favicon: Logo 2E
+
+### Crear favicon.svg
+
+Crea un archivo **`favicon.svg`** en la raíz del proyecto (`Lety2E/`) con el siguiente contenido:
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Fondo magenta/rosa (#FF00AA) -->
+  <rect width="200" height="200" fill="#FF00AA"/>
+  
+  <!-- Texto "2E" en turquesa (#00DEC8) -->
+  <text 
+    x="100" 
+    y="130" 
+    font-family="Playfair Display, serif" 
+    font-size="120" 
+    font-weight="bold"
+    text-anchor="middle" 
+    fill="#00DEC8"
+  >2E</text>
+</svg>
+```
+
+### Linkarlo en el HTML
+
+**En archivos de profundidad 0** (raíz - `index.html`):
+```html
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+```
+
+**En archivos de profundidad 1** (dentro de sección - `escritos/index.html`):
+```html
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+```
+
+**En archivos de profundidad 2** (dentro de subcarpeta - `math/matematicas-1/tema.html`):
+```html
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+```
+
+**Ubicación en el `<head>`:**
+```html
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>lety2e.com</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">  <!-- Aquí -->
+  <link rel="stylesheet" href="style.css">
+  <!-- más contenido... -->
+</head>
+```
+
+**Ventajas del SVG:**
+- ✅ Escalable en cualquier tamaño
+- ✅ Súper ligero
+- ✅ Compatible con navegadores modernos
+- ✅ Usa los colores de la paleta oficial (--M y --T)
+
+---
+
 ## 📂 Pasos para Agregar una Nueva Sección
 
 ### Paso 1: Crear Estructura
@@ -439,6 +500,8 @@ Por lo tanto, el src debe ser:
 
 ## ✅ Checklist para Todo Nuevo Contenido
 
+- [ ] Favicon SVG creado en raíz con logo 2E (magenta + turquesa)
+- [ ] Favicon linkado con profundidad correcta en `<head>`
 - [ ] Estructura de carpeta creada (`/seccion/tema/`)
 - [ ] HTML con profundidad correcta (`../../../nav.js` si aplica)
 - [ ] `body[data-section="..."]` incluido

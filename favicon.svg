@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Fondo magenta/rosa (#FF00AA) -->
+  <rect width="200" height="200" fill="#FF00AA"/>
+
+  <!-- Texto "2E" en turquesa (#00DEC8) -->
+  <text
+    x="100"
+    y="130"
+    font-family="Playfair Display, serif"
+    font-size="120"
+    font-weight="bold"
+    text-anchor="middle"
+    fill="#00DEC8"
+  >2E</text>
+</svg>
